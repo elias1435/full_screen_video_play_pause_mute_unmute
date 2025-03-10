@@ -1,4 +1,6 @@
- document.querySelectorAll(".welcome-text").forEach(button => {
+// video will start after ".first-screen" click element
+
+document.querySelectorAll(".welcome-text").forEach(button => {
     button.addEventListener("click", function () {
         // Add class to body
         document.body.classList.add("video-started");
@@ -11,11 +13,13 @@
 
         // Create video element
         let video = document.createElement("video");
-        video.src = "https://bridge-ette.com/wp-content/uploads/2024/07/Arman-Safavi-web2.mp4";
+        video.src = "https://bridge-ette.com/wp-content/uploads/2025/03/LAS-Casa-Bridge-ette-2024-Full-Videography-2_1.mp4";
         video.autoplay = true;
         video.muted = false; // Default sound ON
         video.loop = false;
-        video.controls = false; // Hide video controls
+        video.controls = false;
+        video.preload = "auto"; // ✅ Preload video for faster loading
+        video.setAttribute("playsinline", "true"); // ✅ Ensures smooth playback on mobile
 
         // Apply styles for video (layer 1)
         video.style.position = "absolute";
@@ -24,7 +28,7 @@
         video.style.width = "100vw";
         video.style.height = "100vh";
         video.style.objectFit = "cover";
-        video.style.zIndex = "1"; // Set to layer 1
+        video.style.zIndex = "1";
         video.style.backgroundColor = "black";
 
         // Create control container
@@ -34,14 +38,14 @@
         controlContainer.style.right = "50px";
         controlContainer.style.display = "flex";
         controlContainer.style.gap = "15px";
-        controlContainer.style.fontSize = "20px";
+        controlContainer.style.fontSize = "15px";
         controlContainer.style.color = "#ffffff";
-        controlContainer.style.zIndex = "10000"; // Always above everything
+        controlContainer.style.zIndex = "10000";
         controlContainer.style.cursor = "pointer";
 
         // Create Play/Pause button
         let playPauseButton = document.createElement("div");
-        playPauseButton.innerHTML = "Pause"; // Default state is playing
+        playPauseButton.innerHTML = "Pause";
         playPauseButton.style.background = "rgba(0, 0, 0, 0)";
         playPauseButton.style.padding = "5px";
         playPauseButton.style.borderRadius = "5px";
@@ -58,21 +62,20 @@
 
         // Create Mute/Unmute button
         let muteButton = document.createElement("div");
-        muteButton.innerHTML = "Mute"; // Default unmuted
+        muteButton.innerHTML = "Mute";
         muteButton.style.background = "rgba(0, 0, 0, 0)";
         muteButton.style.padding = "5px";
         muteButton.style.borderRadius = "5px";
 
         muteButton.addEventListener("click", function () {
             video.muted = !video.muted;
-            muteButton.innerHTML = video.muted ? "Unmute" : "Mute"; // Change text
+            muteButton.innerHTML = video.muted ? "Unmute" : "Mute";
         });
 
-        // Remove video when it ends
+        // Restart video when it ends
         video.addEventListener("ended", function () {
-            video.remove();
-            controlContainer.remove();
-            document.body.classList.remove("video-started"); // Remove class when video ends
+            video.currentTime = 0;
+            video.play();
         });
 
         // Remove video & controls on "Escape" key
@@ -80,7 +83,7 @@
             if (event.key === "Escape") {
                 video.remove();
                 controlContainer.remove();
-                document.body.classList.remove("video-started"); // Remove class when video closes
+                document.body.classList.remove("video-started");
             }
         });
 
