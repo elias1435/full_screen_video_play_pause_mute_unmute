@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🔹 Force Unmute Automatically After 2 Seconds
     setTimeout(() => {
         video.muted = false;
-        muteButton.src = "https://your-domain.com/img/mute.png";
+        muteButton.src = "https://your-domain.com/img/unmute.png";
     }, 2000); // 2-second delay
 
     video.addEventListener("ended", function () {
@@ -100,3 +100,4 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(video);
     document.body.appendChild(controlContainer);
 });
+
